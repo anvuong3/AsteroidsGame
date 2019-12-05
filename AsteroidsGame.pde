@@ -70,7 +70,7 @@ public void keyPressed(){
   if(key == 'd' || key == 'D'){
     rotatingRight = true;
   }
-  if(key == 'r' || key == 'R'){
+  if(key == 'h' || key == 'H'){
     hyperspace = true;
   }
 }
