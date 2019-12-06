@@ -8,11 +8,13 @@ private boolean rotatingLeft = false;
 private boolean rotatingRight = false;
 private boolean forward = false;
 private boolean backward = false;
+private ArrayList <Asteroid> asteroidList = new ArrayList <Asteroid> ();
+
 
 public void setup() 
 {
 	background(0);
-  size(1200,700);
+  size(1000,700);
   ship = new Spaceship();
   stars = new Star [200];
   for(int i = 0; i < stars.length; i++){
@@ -25,6 +27,9 @@ public void setup()
     d = (int)(Math.random()*10)+1;
   	stars[i] = new Star(x,y,a,b,c,d);
   }
+  for(int i = 0; i < 10; i++){
+    asteroidList.add(new Asteroid());
+  }
 
 }
 public void draw() 
@@ -35,14 +40,19 @@ public void draw()
   strokeWeight(0);
   ship.show();
   ship.move();
+     for(int i = 0; i < asteroidList.size(); i++){
+    Asteroid temp = asteroidList.get(i);
+    temp.show();
+    temp.move();
+  }
   startHyperSpace();
-  if(forward == true){ship.accelerate(0.2);}
+  if(forward == true){ship.accelerate(0.1);}
 
-  if(backward == true){ship.accelerate(-0.2);}
+  if(backward == true){ship.accelerate(-0.1);}
 
-  if(rotatingLeft == true){ship.turn(-2);}
+  if(rotatingLeft == true){ship.turn(-5);}
 
-  if(rotatingRight == true){ship.turn(2);}
+  if(rotatingRight == true){ship.turn(5);}
 
 }
 
