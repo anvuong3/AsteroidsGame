@@ -1,24 +1,24 @@
+
 class Spaceship extends Floater
 {   
-
 
     public Spaceship(){
        int [] ship2X = {-8,16,-8,-2};
        int [] ship2Y = {-8,0,8,0};
 
-    	myCenterX = cx;
-    	myCenterY = cy;
-    	corners = 4;
-    	
-    	xCorners = new int [corners]; 
+        myCenterX = cx;
+        myCenterY = cy;
+        corners = 4;
+        
+        xCorners = new int [corners]; 
         xCorners = ship2X;
-    	yCorners = new int [corners];
+        yCorners = new int [corners];
         yCorners = ship2Y;
 
-    	myColor = color(255,255,255);
-    	myDirectionX = 0;
-    	myDirectionY = 0;
-    	myPointDirection = 0;
+        myColor = color(255,255,255);
+        myDirectionX = 0;
+        myDirectionY = 0;
+        myPointDirection = 0;
 
     }
     public void setX(int x){myCenterX = x;}
@@ -40,22 +40,11 @@ class Spaceship extends Floater
     public void setPointDirection(int degrees){myPointDirection = degrees;}
 
     public double getPointDirection(){return myPointDirection;}
+    public double getCentX(){return myCenterX;}
 
-    public void show(){
-    	fill(myColor);
-    	translate((float)myCenterX, (float)myCenterY);
-   		//convert degrees to radians for rotate()     
-   		float dRadians = (float)(myPointDirection*(Math.PI/180));
-    	//rotate so that the polygon will be drawn in the correct direction
-    	rotate(dRadians);
-    	//draw the polygon
-    	beginShape();
-    	for (int nI = 0; nI < corners; nI++){
-      		vertex(xCorners[nI], yCorners[nI]);
-    	}
-    	endShape(CLOSE);
+    public double getCentY(){return myCenterY;}
+    public void setCentX(double x){myCenterX = x;}
 
-    }
+    public void setCentY(double y){myCenterY = y;}
+
 }
-
-

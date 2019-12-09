@@ -8,7 +8,14 @@ private boolean rotatingLeft = false;
 private boolean rotatingRight = false;
 private boolean forward = false;
 private boolean backward = false;
-private ArrayList <Asteroid> asteroidList = new ArrayList <Asteroid> ();
+private ArrayList <Asteroid> roids = new ArrayList <Asteroid> ();
+private ArrayList <Bullet> shot = new ArrayList <Bullet>();
+private boolean shooting = false;
+
+private int hp = 3;
+private boolean dead = false;
+private int maxRoid = 10;
+
 
 
 public void setup() 
@@ -27,9 +34,10 @@ public void setup()
     d = (int)(Math.random()*10)+1;
   	stars[i] = new Star(x,y,a,b,c,d);
   }
-  for(int i = 0; i < 10; i++){
-    asteroidList.add(new Asteroid());
+  for(int i = 0; i < maxRoid; i++){
+    roids.add(new Asteroid());
   }
+      smooth();
 
 }
 public void draw() 
@@ -40,26 +48,104 @@ public void draw()
   strokeWeight(0);
   ship.show();
   ship.move();
-     for(int i = 0; i < asteroidList.size(); i++){
-    Asteroid temp = asteroidList.get(i);
+     for(int i = 0; i < roids.size(); i++){
+    Asteroid temp = roids.get(i);
     temp.show();
     temp.move();
+    if(dist( (float) roids.get(i).getCentX(), (float) roids.get(i).getCentY(), (float) ship.getCentX(), (float) ship.getCentY()) < 25 && frameCount > 30)
+      {
+        roids.remove(i);
+        hp--;
+      }
   }
   startHyperSpace();
-  if(forward == true){ship.accelerate(0.1);}
+  if(forward == true){ship.accelerate(0.05);}
 
-  if(backward == true){ship.accelerate(-0.1);}
+  if(backward == true){ship.accelerate(-0.05);}
 
-  if(rotatingLeft == true){ship.turn(-5);}
+  if(rotatingLeft == true){ship.turn(-3);}
 
-  if(rotatingRight == true){ship.turn(5);}
+  if(rotatingRight == true){ship.turn(3);}
+  if(hp == 3)
+    {
+      for(int x = 10; x <= 110; x += 50)
+      {
+        fill(255, 0, 0);
+        rect(x, 670, 50, 10);
+      }
+    }
+    else if(hp == 2)
+  { 
+    for(int x = 10; x <= 60; x += 50)
+      {
+        fill(255, 0, 0);
+        rect(x, 670, 50, 10);
+      }
+  }
+    else if(hp == 1)
+    {
+      fill(255, 0, 0);
+      rect(10, 670, 50, 10);
+    }
+    else
+    {
+      noLoop();
+      dead = true;
+      textAlign(CENTER);
+      textSize(50);
+      fill(255);
+      text("GAME OVER", 500, 350);
+      textSize(25);
+      text("Press R to restart", 500, 425);
+    }
+for(int i = 0; i < shot.size(); i++)
+  {
+    shot.get(i).show();
+    shot.get(i).move();
+
+    if(shot.get(i).getCentX() == 1000 || shot.get(i).getCentX() == 0 || shot.get(i).getCentY() == 1000 || shot.get(i).getCentY() == 0)
+    {
+      shot.remove(i);
+    }
+  }
+
+  for(int i = 0; i < shot.size(); i++)
+  {
+    for(int j = 0; j < roids.size(); j++)
+    {
+      if(dist( (float) roids.get(j).getCentX(), (float) roids.get(j).getCentY(), (float) shot.get(i).getCentX(), (float) shot.get(i).getCentY()) < 15)
+        {
+          roids.remove(j);
+          shot.remove(i);
+          break;
+      }
+    }
+  }
+
+  if(roids.size() == 0 && maxRoid <= 50)
+  {
+        maxRoid += 2;
+
+        for(int k = 0; k < maxRoid; k++)
+        {
+          roids.add(new Asteroid());
+        } 
+  }
+    if(shooting == true)
+  {
+    if(frameCount % 6 == 0)
+    {
+      shot.add(new Bullet(ship));
+
+    }
+  }
 
 }
 
 public void startHyperSpace(){
     if(hyperspace == true){
-        ship.setX((int)(Math.random()*1200));
-        ship.setY((int)(Math.random()*600));
+        ship.setX((int)(Math.random()*1000));
+        ship.setY((int)(Math.random()*700));
         ship.setPointDirection((int)(Math.random()*360));
         ship.setDirectionX(0);
         ship.setDirectionY(0);
@@ -83,6 +169,31 @@ public void keyPressed(){
   if(key == 'h' || key == 'H'){
     hyperspace = true;
   }
+
+   if(key == ' ')
+  {
+    shooting = true;
+  }
+
+  if(key == 'r' && dead == true)
+  {
+    loop();
+    dead = false;
+    hp = 3;
+    ship.setX(500);
+    ship.setY(350);
+    ship.setPointDirection(-90);
+    ship.setDirectionX(0);
+    ship.setDirectionY(0);
+
+    if(roids.size() < 10)
+    {
+      for(int i = roids.size(); i < 10; i++)
+      {
+        roids.add(new Asteroid());
+      }
+    }
+  }
 }
 void keyReleased(){
   if(key == 'w' || key == 'W'){
@@ -96,5 +207,9 @@ void keyReleased(){
   }
   if(key == 'd' || key == 'D'){
     rotatingRight = false;
+  }
+    if(key == ' ')
+  {
+    shooting = false;
   }
 }
