@@ -15,7 +15,7 @@ private boolean shooting = false;
 private int hp = 3;
 private boolean dead = false;
 private int maxRoid = 10;
-
+private int counter = 0;
 
 
 public void setup() 
@@ -42,7 +42,11 @@ public void setup()
 }
 public void draw() 
 {
+
   background(0);
+  fill(255);
+  textSize(25);
+  text("Score: " + counter, 25, 50);
   fill(255);
 	for(int i = 0; i < stars.length; i++){stars[i].show();}
   strokeWeight(0);
@@ -56,6 +60,7 @@ public void draw()
       {
         roids.remove(i);
         hp--;
+        counter++;
       }
   }
   startHyperSpace();

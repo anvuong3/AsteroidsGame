@@ -10,8 +10,8 @@ class Bullet extends Floater
 
 		dRadians = myPointDirection*(Math.PI/180);
 
-		myDirectionX = 5 * Math.cos(dRadians) + ship.getX();
-		myDirectionY = 5 * Math.sin(dRadians) + ship.getY();
+		myDirectionX = 5 * Math.cos(dRadians) + ship.getDirectionX();
+		myDirectionY = 5 * Math.sin(dRadians) + ship.getDirectionY();
 
 		myColor = color(255, 0, 0);
 	}
