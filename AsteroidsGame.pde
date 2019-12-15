@@ -108,7 +108,7 @@ for(int i = 0; i < shot.size(); i++)
     shot.get(i).show();
     shot.get(i).move();
 
-    if(shot.get(i).getCentX() == 1000 || shot.get(i).getCentX() == 0 || shot.get(i).getCentY() == 1000 || shot.get(i).getCentY() == 0)
+    if(shot.get(i).getCentX() == 500 || shot.get(i).getCentX() == 0 || shot.get(i).getCentY() == 500 || shot.get(i).getCentY() == 0)
     {
       shot.remove(i);
     }
@@ -122,6 +122,7 @@ for(int i = 0; i < shot.size(); i++)
         {
           roids.remove(j);
           shot.remove(i);
+          counter++;
           break;
       }
     }
